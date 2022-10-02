@@ -5,6 +5,7 @@ void setup () {
 void draw() {
   background(250);
   map();
+  player();
   lines();
 }
 
@@ -27,4 +28,9 @@ void lines() {
   line(500,0,500,800);
   line(600,0,600,800);
   line(700,0,700,800);
+}
+
+void player() {
+  fill(0,255,0);
+  rect(50,450,100,100);
 }
