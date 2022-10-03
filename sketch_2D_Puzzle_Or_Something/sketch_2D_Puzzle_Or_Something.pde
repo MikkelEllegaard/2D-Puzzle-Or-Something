@@ -1,6 +1,7 @@
 int Ppx = 50;
 int Ppy = 450;
 boolean Map1 = true;
+boolean noClip = false;
 
 void setup () {
   size(800, 800);
@@ -40,30 +41,54 @@ void player() {
 }
 
 void keyPressed() {
+  if (noClip == false) {
+    if (key == 'p') {
+      noClip = true;
+    }
+  }
+  else if (noClip == true) {
+    if (key == 'p') {
+      noClip = false;
+    }
+    if (key == 'w') Ppy = Ppy - 5;
+    if (key == 'a') Ppx = Ppx - 5;
+    if (key == 's') Ppy = Ppy + 5;
+    if (key == 'd') Ppx = Ppx + 5;
+  }
+  
+  if (noClip == false) {
   if (Map1 == true) {
     if (key == 'w') {
-      if (!(Ppy == 405 && Ppx < 200) && 
+      if (!(Ppy == 0) &&
+      !(Ppy == 405 && Ppx < 200) && 
       !(Ppy == 205 && Ppx > 100 && Ppx < 405) && 
       !(Ppy == 605 && Ppx > 100 && Ppx < 400) && 
       !(Ppy == 405 && Ppx > 300) &&
       !(Ppy == 600 && Ppx > 495 && Ppx < 605)) Ppy = Ppy - 5;
     }
     if (key == 'a') {
-      if (!(Ppy < 205 && Ppx == 405) &&
+      if (!(Ppx == 0) &&
+      !(Ppy < 205 && Ppx == 405) &&
       !(Ppy > 100 && Ppy < 600 && Ppx == 605) &&
       !(Ppy > 295 && Ppy < 405 && Ppx == 200) &&
       !(Ppy > 495 && Ppy < 605 && Ppx == 400) &&
       !(Ppy > 600 && Ppx == 210)) Ppx = Ppx - 5;
     }
     if (key == 's') {
-      if (!(Ppy == 95 && Ppx > 200 && Ppx < 405) &&
+      if (!(Ppy == 700) &&
+      !(Ppy == 95 && Ppx > 200 && Ppx < 405) &&
       !(Ppy == 100 && Ppx > 595 && Ppx < 605) &&
       !(Ppy == 295 && Ppx < 200) &&
       !(Ppy == 295 && Ppx > 400) &&
       !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppy = Ppy + 5;
     }
     if (key == 'd') {
-      Ppx = Ppx + 5;
+      if (!(Ppx == 700) &&
+      !(Ppy < 195 && Ppx == 295) &&
+      !(Ppy > 95 && Ppy < 205 && Ppx == 100) &&
+      !(Ppy > 100 && Ppy < 600 && Ppx == 495) &&
+      !(Ppy > 295 && Ppy < 405 && Ppx == 300)) Ppx = Ppx + 5;
     }
   }
+}
 }
