@@ -156,8 +156,31 @@ void keyPressed() {
 
 void homescreen() {
   if (Homescreen == true) {
-    
+    fill(0);
+    noFill();
+    strokeWeight(4);
+    if (DeviceC == true) {
+      rect(100, 150, 600, 400);
+      textSize(50);
+      text("Choose Your Device", 200, 250);
+      if (Mobile != true || PC != true) {
+        rect(200, 300, 200, 200);
+        rect(400, 300, 200, 200);
+        textSize(100);
+        text("PC", 240, 430);
+        textSize(60);
+        text("PHONE",410,420);
+      }
+    }
+    strokeWeight(1);
   }
+}
+
+void keyPressed() {
+  if (key = 'w') Ppy = Ppy - 5;
+  if (key = 'a') Ppx = Ppx - 5;
+  if (key = 's') Ppy = Ppy + 5;
+  if (key = 'd') Ppx = Ppx + 5;
 }
 
 ////////////////////////////////////////////////////////////////////////////////// Homescreen
