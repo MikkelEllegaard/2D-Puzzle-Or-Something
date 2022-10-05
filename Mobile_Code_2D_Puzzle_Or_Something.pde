@@ -3,6 +3,9 @@ int Ppy = 450;
 boolean Map1 = false;
 boolean noClip = false;
 boolean Homescreen = true;
+boolean PC = false;
+boolean Mobile = false;
+boolean DeviceC = true;
 
 void setup () {
   size(800, 1050);
@@ -89,58 +92,6 @@ void mouseClicked() {
           !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppx = Ppx - 5;
       }
       if (x>450 && x<550 && y>950 && y<1050) { //moves player 100 right if not already full right
-        if (!(Ppx == 700) &&
-          !(Ppy < 195 && Ppx == 295) &&
-          !(Ppy > 95 && Ppy < 205 && Ppx == 100) &&
-          !(Ppy > 100 && Ppy < 600 && Ppx == 495) &&
-          !(Ppy > 295 && Ppy < 405 && Ppx == 300)) Ppx = Ppx + 5;
-      }
-    }
-  }
-}
-
-void keyPressed() {
-  if (noClip == false) {
-    if (key == 'p') {
-      noClip = true;
-    }
-  } else if (noClip == true) {
-    if (key == 'p') {
-      noClip = false;
-    }
-    if (key == 'w') Ppy = Ppy - 5;
-    if (key == 'a') Ppx = Ppx - 5;
-    if (key == 's') Ppy = Ppy + 5;
-    if (key == 'd') Ppx = Ppx + 5;
-  }
-
-  if (noClip == false) {
-    if (Map1 == true) {
-      if (key == 'w') {
-        if (!(Ppy == 0) &&
-          !(Ppy == 405 && Ppx < 200) &&
-          !(Ppy == 205 && Ppx > 100 && Ppx < 405) &&
-          !(Ppy == 605 && Ppx > 100 && Ppx < 400) &&
-          !(Ppy == 405 && Ppx > 300) &&
-          !(Ppy == 600 && Ppx > 495 && Ppx < 605)) Ppy = Ppy - 5;
-      }
-      if (key == 'a') {
-        if (!(Ppx == 0) &&
-          !(Ppy < 205 && Ppx == 405) &&
-          !(Ppy > 100 && Ppy < 600 && Ppx == 605) &&
-          !(Ppy > 295 && Ppy < 405 && Ppx == 200) &&
-          !(Ppy > 495 && Ppy < 605 && Ppx == 400) &&
-          !(Ppy > 600 && Ppx == 210)) Ppx = Ppx - 5;
-      }
-      if (key == 's') {
-        if (!(Ppy == 700) &&
-          !(Ppy == 95 && Ppx > 200 && Ppx < 405) &&
-          !(Ppy == 100 && Ppx > 595 && Ppx < 605) &&
-          !(Ppy == 295 && Ppx < 200) &&
-          !(Ppy == 295 && Ppx > 400) &&
-          !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppy = Ppy + 5;
-      }
-      if (key == 'd') {
         if (!(Ppx == 700) &&
           !(Ppy < 195 && Ppx == 295) &&
           !(Ppy > 95 && Ppy < 205 && Ppx == 100) &&
@@ -258,4 +209,64 @@ if (Map1 == true) {
   fill(0, 0, 255); //Exit
   rect(0, 605, 5, 200);
 }
+}
+
+////////////////////////////////////////////////////////////////////////////////// Map 1
+////////////////////////////////////////////////////////////////////////////////// Movement Crap
+
+void keyPressed() {
+  if (key == 'w') Ppy = Ppy - 5;
+  if (key == 'a') Ppx = Ppx - 5;
+  if (key == 's') Ppy = Ppy + 5;
+  if (key == 'd') Ppx = Ppx + 5;
+  
+  if (noClip == false) {
+    if (key == 'p') {
+      noClip = true;
+    }
+  } else if (noClip == true) {
+    if (key == 'p') {
+      noClip = false;
+    }
+    if (key == 'w') Ppy = Ppy - 5;
+    if (key == 'a') Ppx = Ppx - 5;
+    if (key == 's') Ppy = Ppy + 5;
+    if (key == 'd') Ppx = Ppx + 5;
+  }
+
+  if (noClip == false) {    
+    if (Map1 == true) {
+      if (key == 'w') {
+        if (!(Ppy == 0) &&
+          !(Ppy == 405 && Ppx < 200) &&
+          !(Ppy == 205 && Ppx > 100 && Ppx < 405) &&
+          !(Ppy == 605 && Ppx > 100 && Ppx < 400) &&
+          !(Ppy == 405 && Ppx > 300) &&
+          !(Ppy == 600 && Ppx > 495 && Ppx < 605)) Ppy = Ppy - 5;
+      }
+      if (key == 'a') {
+        if (!(Ppx == 0) &&
+          !(Ppy < 205 && Ppx == 405) &&
+          !(Ppy > 100 && Ppy < 600 && Ppx == 605) &&
+          !(Ppy > 295 && Ppy < 405 && Ppx == 200) &&
+          !(Ppy > 495 && Ppy < 605 && Ppx == 400) &&
+          !(Ppy > 600 && Ppx == 210)) Ppx = Ppx - 5;
+      }
+      if (key == 's') {
+        if (!(Ppy == 700) &&
+          !(Ppy == 95 && Ppx > 200 && Ppx < 405) &&
+          !(Ppy == 100 && Ppx > 595 && Ppx < 605) &&
+          !(Ppy == 295 && Ppx < 200) &&
+          !(Ppy == 295 && Ppx > 400) &&
+          !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppy = Ppy + 5;
+      }
+      if (key == 'd') {
+        if (!(Ppx == 700) &&
+          !(Ppy < 195 && Ppx == 295) &&
+          !(Ppy > 95 && Ppy < 205 && Ppx == 100) &&
+          !(Ppy > 100 && Ppy < 600 && Ppx == 495) &&
+          !(Ppy > 295 && Ppy < 405 && Ppx == 300)) Ppx = Ppx + 5;
+      }
+    }
+  }
 }
