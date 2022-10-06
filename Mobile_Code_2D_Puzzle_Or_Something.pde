@@ -4,7 +4,8 @@ boolean Map1 = false;
 boolean noClip = false;
 boolean Homescreen = true;
 boolean PC = false;
-boolean Mobile = false;
+boolean Mobile = true;
+boolean HowToPlay = false;
 
 void setup () {
   size(800, 1050);
@@ -69,9 +70,21 @@ void homescreen() {
     if (Ppy > 700) text("That was intended :)", Ppx+100, Ppy);
     textSize(20);
     text("You Can Move Now", 300, 820);
+    fill(153, 255, 255);
     rect(150, 50, 525, 200);
+    textSize(90);
+    fill(0);
+    text("How To Play", 160, 240);
+    fill(153, 255, 255);
     rect(150, 300, 525, 200);
+    textSize(200);
+    fill(0);
+    text("Play", 200, 480);
+    fill(153, 255, 255);
     rect(150, 550, 525, 200);
+    textSize(175);
+    fill(0);
+    text("About", 160, 740);
   }
   strokeWeight(1);
 }
@@ -215,8 +228,8 @@ void mouseClicked() {
 
 ///////////////////////////////////////////// Input Stuff
 ///////////////////////////////////////////// Map 1
- 
- boolean key1 = false;
+
+boolean key1 = false;
 boolean key2 = false;
 boolean key3 = false;
 boolean gOpen = false;
