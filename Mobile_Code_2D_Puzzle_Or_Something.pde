@@ -3,9 +3,10 @@ int Ppy = 450;
 boolean Map1 = false;
 boolean noClip = false;
 boolean Homescreen = true;
-boolean PC = false;
-boolean Mobile = true;
+boolean PC = true;
+boolean Mobile = false;
 boolean HowToPlay = false;
+boolean About = false;
 
 void setup () {
   size(800, 1050);
@@ -45,8 +46,8 @@ void player() {
   rect(Ppx, Ppy, 100, 100);
 }
 
-///////////////////////////////////////////// 2D Puzzle Or Something
-///////////////////////////////////////////// Homescreen
+//////////////////////////////////////////////////////// 2D Puzzle ...
+//////////////////////////////////////////////////////// Homescreen
 
 void homescreen() {
   if (Homescreen == true) {
@@ -64,35 +65,74 @@ void homescreen() {
       text("Choose Your Device", 150, 250);
       text("PHONE", 410, 420);
     }
+    if ((Mobile == true || PC == true) && HowToPlay == false && About == false) {
+      textSize(20);
+      if (Ppy > 700) text("That was intended :)", Ppx+100, Ppy);
+      textSize(20);
+      text("You Can Move Now", 300, 820);
+      fill(153, 255, 255);
+      rect(150, 50, 500, 200);
+      textSize(90);
+      fill(0);
+      text("How To Play", 160, 240);
+      fill(153, 255, 255);
+      rect(150, 300, 500, 200);
+      textSize(200);
+      fill(0);
+      text("Play", 200, 480);
+      fill(153, 255, 255);
+      rect(150, 550, 500, 200);
+      textSize(175);
+      fill(0);
+      text("About", 160, 740);
+    }
+    if (HowToPlay == true) { //How to play menu
+      fill(153, 255, 255);
+      rect(50, 50, 700, 700);
+      fill(0);
+      textSize(60);
+      text("How To Play:", 240, 125);
+      textSize(40);
+      fill(255, 153, 0);
+      rect(600,175,50,50);
+      fill(0);
+      text("These are keys", 100, 200);
+      text("Collect all to unlock exit", 100, 250);
+      text("For more tips, reach more levels", 100, 400);
+    }
+    if (About == true) {
+      fill(153, 255, 255);
+      rect(50, 50, 700, 700);
+      fill(0);
+      textSize(60);
+      text("About", 240, 125);
+      textSize(40);
+      text("Game was made as hobby, and to get", 100, 200);
+      text("better at coding while waiting for", 100, 250);
+      text("next coding lesson (2 weeks).", 100, 300);
+      textSize(55);
+      text("Made by: Mikkel Ellegaard", 100, 500);
+      textSize(50);
+      text("A College Student", 100, 600);
+      text("Computer Science course", 100, 650);
+    }
+    strokeWeight(1);
   }
-  if (Mobile == true || PC == true) {
-    textSize(20);
-    if (Ppy > 700) text("That was intended :)", Ppx+100, Ppy);
-    textSize(20);
-    text("You Can Move Now", 300, 820);
-    fill(153, 255, 255);
-    rect(150, 50, 525, 200);
-    textSize(90);
-    fill(0);
-    text("How To Play", 160, 240);
-    fill(153, 255, 255);
-    rect(150, 300, 525, 200);
-    textSize(200);
-    fill(0);
-    text("Play", 200, 480);
-    fill(153, 255, 255);
-    rect(150, 550, 525, 200);
-    textSize(175);
-    fill(0);
-    text("About", 160, 740);
-  }
-  strokeWeight(1);
 }
 
-///////////////////////////////////////////// Homescreen
-///////////////////////////////////////////// Input Stuff
+//////////////////////////////////////////////////////// Homescreen
+//////////////////////////////////////////////////////// Input stuff
 
 void keyPressed() {
+  if (key == 'q' && HowToPlay == true) { //Goes back from How To Play
+    Homescreen = true;
+    HowToPlay = false;
+  }
+  if (key == 'q' && About == true) { //Goes back from About
+    Homescreen = true;
+    About = false;
+  }
+  
   if (Homescreen == true && PC == true) {
     if (key == 'w') Ppy = Ppy - 5;
     if (key == 'a') Ppx = Ppx - 5;
@@ -141,11 +181,12 @@ void keyPressed() {
           !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppy = Ppy + 5;
       }
       if (key == 'd') {
-        if (!(Ppx == 700) &&
-          !(Ppy < 195 && Ppx == 295) &&
-          !(Ppy > 95 && Ppy < 205 && Ppx == 100) &&
-          !(Ppy > 100 && Ppy < 600 && Ppx == 495) &&
-          !(Ppy > 295 && Ppy < 405 && Ppx == 300)) Ppx = Ppx + 5;
+        if (!(Ppy == 700) &&
+          !(Ppx > 100 && Ppx < 295 && Ppy == 95) &&
+          !(Ppx > 495 && Ppx < 605 && Ppy == 100) &&
+          !(Ppx < 200 && Ppy == 295) &&
+          !(Ppx > 300 && Ppy == 295) && 
+          !(Ppx > 100 && Ppx < 400 && Ppy == 495)) Ppx = Ppx + 5;
       }
     }
   }
@@ -162,7 +203,7 @@ void mouseClicked() {
     if (x>450 && x<550 && y>950 && y<1050) Ppx = Ppx + 5;
   }
 
-  if (Homescreen == true) {
+  if (Homescreen == true) { //Device selection
     if (PC == false && Mobile == false) {
       if (x > 200 && x < 400 && y > 300 && y < 500) {
         PC = true;
@@ -171,6 +212,12 @@ void mouseClicked() {
         Mobile = true;
       }
     }
+    if (x > 150 && x < 650 && y > 50 && y < 250) HowToPlay = true; //How To Play button
+    if (x > 150 && x < 650 && y > 300 && y < 500) { //Play button
+      Map1 = true;
+      Homescreen = false;
+    }
+    if (x > 150 && x < 650 && y > 550 && y < 750) About = true; //About button
   }
 
   if (Map1 == true) {
@@ -226,8 +273,8 @@ void mouseClicked() {
   }
 }
 
-///////////////////////////////////////////// Input Stuff
-///////////////////////////////////////////// Map 1
+//////////////////////////////////////////////////////// Input stuff
+//////////////////////////////////////////////////////// Map1
 
 boolean key1 = false;
 boolean key2 = false;
