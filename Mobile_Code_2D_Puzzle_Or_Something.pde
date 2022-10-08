@@ -174,19 +174,20 @@ void keyPressed() {
       }
       if (key == 's') {
         if (!(Ppy == 700) &&
-          !(Ppy == 95 && Ppx > 200 && Ppx < 405) &&
-          !(Ppy == 100 && Ppx > 595 && Ppx < 605) &&
+          !(Ppy == 95 && Ppx > 100 && Ppx < 300) &&
+          !(Ppy == 100 && Ppx > 495 && Ppx < 605) &&
           !(Ppy == 295 && Ppx < 200) &&
-          !(Ppy == 295 && Ppx > 400) &&
-          !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppy = Ppy + 5;
+          !(Ppy == 295 && Ppx > 300) &&
+          !(Ppy == 495 && Ppx > 100 && Ppx < 400) &&
+          !(Ppy == 495 && Ppx < 105 && gOpen == false)) Ppy = Ppy + 5;
       }
       if (key == 'd') {
         if (!(Ppy == 700) &&
-          !(Ppx > 100 && Ppx < 295 && Ppy == 95) &&
-          !(Ppx > 495 && Ppx < 605 && Ppy == 100) &&
-          !(Ppx < 200 && Ppy == 295) &&
-          !(Ppx > 300 && Ppy == 295) && 
-          !(Ppx > 100 && Ppx < 400 && Ppy == 495)) Ppx = Ppx + 5;
+          !(Ppx == 100 && Ppy > 95 && Ppy < 205) &&
+          !(Ppx == 100 && Ppy > 500) &&
+          !(Ppx == 295 && Ppy < 100) &&
+          !(Ppx == 300 && Ppy > 295 && Ppy < 405) && 
+          !(Ppx == 495 && Ppy > 100 && Ppy < 600)) Ppx = Ppx + 5;
       }
     }
   }
