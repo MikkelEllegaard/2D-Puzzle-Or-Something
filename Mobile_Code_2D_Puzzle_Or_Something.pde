@@ -1,12 +1,15 @@
-int Ppx = 50;
-int Ppy = 450;
+int Ppx = 0;
+int Ppy = 0;
 boolean Map1 = false;
+boolean Map2 = false;
 boolean noClip = false;
 boolean Homescreen = true;
-boolean PC = true;
-boolean Mobile = false;
+boolean Controls = true;
 boolean HowToPlay = false;
 boolean About = false;
+boolean Map1S = false;
+boolean Map2S = false;
+boolean DevMode = false;
 
 void setup () {
   size(800, 1050);
@@ -14,10 +17,72 @@ void setup () {
 
 void draw() {
   background(250);
-  map();
+  map1();
+  map2();
+  devmode();
   player();
   homescreen();
   lines();
+}
+
+void devmode() {
+  if (DevMode == true) {
+    textSize(20);
+    fill(0);
+    text("Ppx:", 200, 820);
+    text(Ppx, 250, 820);
+    text("Ppy:", 430, 820);
+    text(Ppy, 480, 820);
+
+    if (noClip == false) text("noClip: false", 10, 850);
+    else if (noClip == true) text("noClip: true", 10, 850);
+    if (Controls == false) text("Controls: false", 10, 880);
+    else if (Controls == true) text("Controls: true", 10, 880);
+    if (Homescreen == false) text("Homescreen: false", 140, 880);
+    else if (Homescreen == true) text("Homescreen: true", 140, 880);
+    if (HowToPlay == false) text("HowToPlay: false", 10, 910);
+    else if (HowToPlay == true) text("HowToPlay: true", 10, 910);
+    if (About == false) text("About: false", 170, 910);
+    else if (About == true) text("About: true", 170, 910);
+
+    if (Map1 == false) text("Map1: false", 300, 850);
+    else if (Map1 == true) {
+      text("Map1: true", 300, 850);
+      text("Map1", 600, 850);
+      if (gOpen1 == false) text("gOpen1: false", 600, 880);
+      else if (gOpen1 == true) text("gOpen1: true", 600, 880);
+      if (key11 == false) text("key11: false", 600, 910);
+      else if (key11 == true) text("key11: true", 600, 910);
+      if (key12 == false) text("key12: false", 600, 940);
+      else if (key12 == true) text("key12: true", 600, 940);
+      if (key13 == false) text("key13: false", 600, 970);
+      else if (key13 == true) text("key13: true", 600, 970);
+    }
+    if (Map1S == false) text("Map1S: false", 400, 850);
+    else if (Map1S == true) text("Map1S: true", 400, 850);
+    if (Map2 == false) text("Map2: false", 300, 880);
+    else if (Map2 == true) {
+      text("Map2: true", 300, 880);
+      text("Map2", 600, 850);
+      if (gOpen2 == false) text("gOpen2: false", 600, 880);
+      else if (gOpen2 == true) text("gOpen2: true", 600, 880);
+      if (lever1 == false) text("lever1: false", 600, 910);
+      else if (lever1 == true) text("lever1: true", 600, 910);
+      if (key21 == 2) text("key21: 2", 600, 940);
+      else if (key21 == 1) text("key21: 1", 600, 940);
+      else if (key21 == 0) text("key21: 0", 600, 940);
+      if (key22 == 2) text("key22: 2", 600, 970);
+      else if (key22 == 1) text("key22: 1", 600, 970);
+      else if (key22 == 0) text("key22: 0", 600, 970);
+      if (key23 == 2) text("key23: 2", 600, 1000);
+      else if (key23 == 1) text("key23: 1", 600, 1000);
+      else if (key23 == 0) text("key23: 0", 600, 1000);
+    }
+    if (Map2S == false) text("Map2S: false", 400, 880);
+    else if (Map2S == true) text("Map2S: true", 400, 880);
+
+    noFill();
+  }
 }
 
 void lines() {
@@ -28,21 +93,32 @@ void lines() {
   line(0, 500, 800, 500);
   line(0, 600, 800, 600);
   line(0, 700, 800, 700);
+  line(0, 900, 800, 900);
   strokeWeight(4);
   line(0, 800, 800, 800);
 
   strokeWeight(1);
-  line(100, 0, 100, 800); //v
-  line(200, 0, 200, 800);
-  line(300, 0, 300, 800);
-  line(400, 0, 400, 800);
-  line(500, 0, 500, 800);
-  line(600, 0, 600, 800);
-  line(700, 0, 700, 800);
+  line(100, 0, 100, 1050); //v
+  line(200, 0, 200, 1050);
+  line(300, 0, 300, 1050);
+  line(400, 0, 400, 1050);
+  line(500, 0, 500, 1050);
+  line(600, 0, 600, 1050);
+  line(700, 0, 700, 1050);
 }
 
 void player() {
   fill(0, 255, 0);
+  if (Map1 == true && Map1S == false) {
+    Ppx = 50;
+    Ppy = 450;
+    Map1S = true;
+  }
+  if (Map2 == true && Map2S == false) {
+    Ppx = 50;
+    Ppy = 50;
+    Map2S = true;
+  }
   rect(Ppx, Ppy, 100, 100);
 }
 
@@ -54,22 +130,29 @@ void homescreen() {
     fill(0);
     noFill();
     strokeWeight(4);
-    if (Mobile == false && PC == false) {
-      rect(100, 150, 600, 400);
+    textSize(20);
+    if (Ppy > 700) text("That was intended :)", Ppx+100, Ppy);
+    textSize(20);
+    text("You Can Move", 300, 820);
+    if (Controls == true) {
+      rect(100, 150, 600, 500);
       textSize(50);
       rect(200, 300, 200, 200);
       rect(400, 300, 200, 200);
-      textSize(100);
-      text("PC", 240, 430);
-      textSize(60);
-      text("Choose Your Device", 150, 250);
-      text("PHONE", 410, 420);
+      textSize(40);
+      text("Use WASD", 220, 400);
+      text("To Move", 230, 450);
+      textSize(75);
+      text("Controls", 275, 250);
+      textSize(45);
+      text("Press 'e' To Continue", 200, 550);
+      text("Press 'q' To Go Back", 210, 610);
+      textSize(30);
+      text("Press 'q'", 450, 380);
+      text("To Go Back", 430, 410);
+      text("To Homescreen", 405, 440);
     }
-    if ((Mobile == true || PC == true) && HowToPlay == false && About == false) {
-      textSize(20);
-      if (Ppy > 700) text("That was intended :)", Ppx+100, Ppy);
-      textSize(20);
-      text("You Can Move Now", 300, 820);
+    if (HowToPlay == false && About == false && Controls == false) {
       fill(153, 255, 255);
       rect(150, 50, 500, 200);
       textSize(90);
@@ -94,7 +177,7 @@ void homescreen() {
       text("How To Play:", 240, 125);
       textSize(40);
       fill(255, 153, 0);
-      rect(600,175,50,50);
+      rect(600, 175, 50, 50);
       fill(0);
       text("These are keys", 100, 200);
       text("Collect all to unlock exit", 100, 250);
@@ -124,6 +207,9 @@ void homescreen() {
 //////////////////////////////////////////////////////// Input stuff
 
 void keyPressed() {
+
+  if (key == 'm') DevMode = true;
+
   if (key == 'q' && HowToPlay == true) { //Goes back from How To Play
     Homescreen = true;
     HowToPlay = false;
@@ -132,19 +218,17 @@ void keyPressed() {
     Homescreen = true;
     About = false;
   }
-  
-  if (Homescreen == true && PC == true) {
+
+  if (Controls == true && key == 'e') Controls = false;
+
+  if (Homescreen == true) {
     if (key == 'w') Ppy = Ppy - 5;
     if (key == 'a') Ppx = Ppx - 5;
     if (key == 's') Ppy = Ppy + 5;
     if (key == 'd') Ppx = Ppx + 5;
   }
 
-  if (noClip == false) {
-    if (key == 'p') {
-      noClip = true;
-    }
-  } else if (noClip == true) {
+  if (noClip == true) {
     if (key == 'p') {
       noClip = false;
     }
@@ -152,9 +236,11 @@ void keyPressed() {
     if (key == 'a') Ppx = Ppx - 5;
     if (key == 's') Ppy = Ppy + 5;
     if (key == 'd') Ppx = Ppx + 5;
-  }
+  } else if (noClip == false) {
+    if (key == 'p') {
+      noClip = true;
+    }
 
-  if (noClip == false) {
     if (Map1 == true) {
       if (key == 'w') {
         if (!(Ppy == 0) &&
@@ -174,102 +260,77 @@ void keyPressed() {
       }
       if (key == 's') {
         if (!(Ppy == 700) &&
-          !(Ppy == 95 && Ppx > 100 && Ppx < 300) &&
-          !(Ppy == 100 && Ppx > 495 && Ppx < 605) &&
-          !(Ppy == 295 && Ppx < 200) &&
-          !(Ppy == 295 && Ppx > 300) &&
-          !(Ppy == 495 && Ppx > 100 && Ppx < 400) &&
-          !(Ppy == 495 && Ppx < 105 && gOpen == false)) Ppy = Ppy + 5;
-      }
-      if (key == 'd') {
-        if (!(Ppy == 700) &&
-          !(Ppx == 100 && Ppy > 95 && Ppy < 205) &&
-          !(Ppx == 100 && Ppy > 500) &&
-          !(Ppx == 295 && Ppy < 100) &&
-          !(Ppx == 300 && Ppy > 295 && Ppy < 405) && 
-          !(Ppx == 495 && Ppy > 100 && Ppy < 600)) Ppx = Ppx + 5;
-      }
-    }
-  }
-}
-
-void mouseClicked() {
-  int x = mouseX;
-  int y = mouseY;
-
-  if (Mobile == true && Homescreen == true) {
-    if (x>350 && x<450 && y>850 && y<950) Ppy = Ppy - 5;
-    if (x>350 && x<450 && y>950 && y<1050) Ppy = Ppy + 5;
-    if (x>250 && x<350 && y>950 && y<1050) Ppx = Ppx - 5;
-    if (x>450 && x<550 && y>950 && y<1050) Ppx = Ppx + 5;
-  }
-
-  if (Homescreen == true) { //Device selection
-    if (PC == false && Mobile == false) {
-      if (x > 200 && x < 400 && y > 300 && y < 500) {
-        PC = true;
-      }
-      if (x > 400 && x < 600 && y > 300 && y < 500) {
-        Mobile = true;
-      }
-    }
-    if (x > 150 && x < 650 && y > 50 && y < 250) HowToPlay = true; //How To Play button
-    if (x > 150 && x < 650 && y > 300 && y < 500) { //Play button
-      Map1 = true;
-      Homescreen = false;
-    }
-    if (x > 150 && x < 650 && y > 550 && y < 750) About = true; //About button
-  }
-
-  if (Map1 == true) {
-    if (noClip == false) {
-      if (x > 690 && x<800 && y > 950 && y < 1025) {
-        noClip = true;
-      }
-    } else if (noClip == true) {
-      if (x > 690 && x<800 && y > 950 && y < 1025) {
-        noClip = false;
-      }
-      if (x>350 && x<450 && y>850 && y<950) Ppy = Ppy - 5;
-      if (x>350 && x<450 && y>950 && y<1050) Ppy = Ppy + 5;
-      if (x>250 && x<350 && y>950 && y<1050) Ppx = Ppx - 5;
-      if (x>450 && x<550 && y>950 && y<1050) Ppx = Ppx + 5;
-    }
-  }
-
-  if (noClip == false) {
-    if (Map1 == true) {
-      if (x>350 && x<450 && y>850 && y<950) { //moves player 100 up if not at top already
-        if (!(Ppy == 0) &&
-          !(Ppy == 405 && Ppx < 200) &&
-          !(Ppy == 205 && Ppx > 100 && Ppx < 405) &&
-          !(Ppy == 605 && Ppx > 100 && Ppx < 400) &&
-          !(Ppy == 405 && Ppx > 300) &&
-          !(Ppy == 600 && Ppx > 495 && Ppx < 605)) Ppy = Ppy - 5;
-      }
-      if (x>350 && x<450 && y>950 && y<1050) { //moves player 100 down if not at bottom already
-        if (!(Ppx == 0) &&
-          !(Ppy < 205 && Ppx == 405) &&
-          !(Ppy > 100 && Ppy < 600 && Ppx == 605) &&
-          !(Ppy > 295 && Ppy < 405 && Ppx == 200) &&
-          !(Ppy > 495 && Ppy < 605 && Ppx == 400) &&
-          !(Ppy > 600 && Ppx == 210)) Ppy = Ppy + 5;
-      }
-      if (x>250 && x<350 && y>950 && y<1050) { //moves player 100 left if not already full left
-        if (!(Ppy == 700) &&
           !(Ppy == 95 && Ppx > 200 && Ppx < 405) &&
           !(Ppy == 100 && Ppx > 595 && Ppx < 605) &&
           !(Ppy == 295 && Ppx < 200) &&
           !(Ppy == 295 && Ppx > 400) &&
-          !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppx = Ppx - 5;
+          !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppy = Ppy + 5;
       }
-      if (x>450 && x<550 && y>950 && y<1050) { //moves player 100 right if not already full right
+      if (key == 'd') {
         if (!(Ppx == 700) &&
-          !(Ppy < 195 && Ppx == 295) &&
-          !(Ppy > 95 && Ppy < 205 && Ppx == 100) &&
-          !(Ppy > 100 && Ppy < 600 && Ppx == 495) &&
-          !(Ppy > 295 && Ppy < 405 && Ppx == 300)) Ppx = Ppx + 5;
+          !(Ppx == 100 && Ppy > 95 && Ppy < 205) &&
+          !(Ppx == 100 && Ppy > 495) &&
+          !(Ppx == 295 && Ppy < 200) &&
+          !(Ppx == 300 && Ppy > 295 && Ppy < 405) &&
+          !(Ppx == 495 && Ppy > 100 && Ppy < 600)) Ppx = Ppx + 5;
       }
+    }
+
+    if (Map2 == true) {
+      if (key == 'w') {
+        if (!(Ppy == 0) &&
+          !(Ppx < 200 && Ppy == 205) &&
+          !(Ppx > 400 && Ppx < 500 && Ppy == 205) &&
+          !(Ppx > 295 && Ppx < 405 && Ppy == 400) &&
+          !(Ppx > 495 && Ppx < 605 && Ppy == 400) &&
+          !(Ppx < 200 && Ppy == 405) &&
+          !(Ppx > 300 && Ppx < 500 && Ppy == 605)) Ppy = Ppy - 5;
+      }
+      if (key == 'a') {
+        if (!(Ppx == 0) &&
+          !(Ppx == 200 && Ppy > 95 && Ppy < 205) &&
+          !(Ppx == 200 && Ppy > 295 && Ppy < 405) &&
+          !(Ppx == 205 && Ppy > 500) &&
+          !(Ppx == 405 && Ppy < 400) &&
+          !(Ppx == 605 && Ppy > 95 && Ppy < 400) &&
+          !(Ppx == 605 && Ppy > 495)) Ppx = Ppx - 5;
+      }
+      if (key == 's') {
+        if (!(Ppy == 700) &&
+          !(Ppx < 200 && Ppy == 95) &&
+          !(Ppx > 400 && Ppx < 605 && Ppy == 95) &&
+          !(Ppx < 200 && Ppy == 295) &&
+          !(Ppx > 95 && Ppx < 205 && Ppy == 500) &&
+          !(Ppx > 300 && Ppx < 605 && Ppy == 495)) Ppy = Ppy + 5;
+      }
+      if (key == 'd') {
+        if (!(Ppx == 700) &&
+          !(Ppx == 95 && Ppy > 500) &&
+          !(Ppx == 295 && Ppy < 400) &&
+          !(Ppx == 300 && Ppy > 495 && Ppy < 605) &&
+          !(Ppx == 495 && Ppy > 200 && Ppy < 400) &&
+          !(Ppx == 495 && Ppy > 600)) Ppx = Ppx + 5;
+      }
+    }
+  }
+}
+void mouseClicked() {
+  int x = mouseX;
+  int y = mouseY;
+
+  if (Homescreen == true) { //Homescreen
+    if (x > 150 && x < 650 && y > 50 && y < 250 && Controls == false) HowToPlay = true; //How To Play button
+    if (x > 150 && x < 650 && y > 300 && y < 500 && Controls == false) { //Play button
+      Map1 = true;
+      Homescreen = false;
+    }
+  }
+  if (x > 150 && x < 650 && y > 550 && y < 750 && Controls == false) About = true; //About button
+
+  if (Map1 == true && DevMode == true) {
+    if (x > 700 && y > 700 && y < 800) {
+      Map1 = false;
+      Map2 = true;
     }
   }
 }
@@ -277,58 +338,45 @@ void mouseClicked() {
 //////////////////////////////////////////////////////// Input stuff
 //////////////////////////////////////////////////////// Map1
 
-boolean key1 = false;
-boolean key2 = false;
-boolean key3 = false;
-boolean gOpen = false;
+boolean key11 = false;
+boolean key12 = false;
+boolean key13 = false;
+boolean gOpen1 = false;
 
-void map() {
-  if (Mobile == true) {
-    noFill(); //buttons
-    strokeWeight(4);
-    rect(350, 850, 100, 100); //UP button
-    rect(350, 950, 100, 100); //DOWN button
-    rect(250, 950, 100, 100); //LEFT button
-    rect(450, 950, 100, 100); //RIGHT button
-    rect(690, 950, 110, 75); //NOCLIP button
-    strokeWeight(1);
-
-    fill(0); //buttons text
-    textSize(40);
-    text("UP", 375, 915); //UP button
-    textSize(35);
-    text("DOWN", 352.5, 1015); //DOWN button
-    text("LEFT", 265, 1015); //LEFT button
-    text("RIGHT", 455, 1015); //RIGHT button
-    textSize(30);
-    text("NOCLIP", 700, 1000); //NOCLIP button
-    if (noClip == true) text("ON", 750, 940); //CONFIRM NOCLIP button
-  }
-
+void map1() {
   if (Map1 == true) {
-    if (key1 == false) { //key 1
+    if (DevMode == true) {
+      fill(0, 0, 255);
+      rect(700, 700, 100, 100);
+      fill(0);
+      textSize(50);
+      text("SKIP", 700, 770);
+      noFill();
+    }
+
+    if (key11 == false) { //key 1
       fill(255, 128, 0);
       if (Ppx > 175 && Ppx < 325 && Ppy < 125) {
         noFill();
-        key1 = true;
+        key11 = true;
       }
       rect(275, 75, 50, 50);
     }
 
-    if (key2 == false) { //key 2
+    if (key12 == false) { //key 2
       fill(255, 128, 0);
       if (Ppx > 575 && Ppx < 725 && Ppy > 175 && Ppy < 325) {
         noFill();
-        key2 = true;
+        key12 = true;
       }
       rect(675, 275, 50, 50);
     }
 
-    if (key3 == false) { //key 3
+    if (key13 == false) { //key 3
       fill(255, 128, 0);
       if (Ppx > 375 && Ppx < 525 && Ppy > 575 && Ppy < 725) {
         noFill();
-        key3 = true;
+        key13 = true;
       }
       rect(475, 675, 50, 50);
     }
@@ -343,12 +391,90 @@ void map() {
     rect(595, 200, 10, 400);
     rect(200, 600, 10, 200);
 
-    if (gOpen == false) fill(255, 0, 0); //Barrier
-    if (key1 == true && key2 == true && key3 == true) gOpen = true;
-    if (gOpen == true) fill(255, 200, 200);
+    if (gOpen1 == false) fill(255, 0, 0); //Barrier
+    if (key11 == true && key12 == true && key13 == true) gOpen1 = true;
+    if (gOpen1 == true) fill(255, 200, 200);
     rect(0, 595, 200, 10);
 
     fill(0, 0, 255); //Exit
-    rect(0, 605, 5, 200);
+    rect(0, 605, 5, 195);
+
+    if (Map1 == true && Ppy > 505 && Ppy < 800 && Ppx < 5) {
+      Map1 = false;
+      Map2 = true;
+    }
+  }
+}
+
+////////////////////////////////////////////////////////////Map1
+////////////////////////////////////////////////////////////Map2
+
+// 2 = not picked up, 0 = picked up, 1 = pull lever
+int key21 = 2;
+int key22 = 2;
+int key23 = 2;
+boolean lever1 = false;
+boolean gOpen2 = false;
+
+void map2() {
+  if (Map2 == true) {
+
+    if (key21 == 2) { //key 1
+      fill(255, 128, 0);
+      if (Ppx > 175 && Ppx < 325 && Ppy < 125 && key21 == 2) {
+        noFill();
+        key21 = 0;
+      } else if ((key22 == 0 || key23 == 0) && lever1 == false) {
+        key21 = 1;
+        fill(255, 178, 102);
+      }
+      rect(275, 75, 50, 50);
+    }
+
+    if (key22 == 2) { //key 2
+      fill(255, 128, 0);
+      if (Ppx > 575 && Ppx < 725 && Ppy > 175 && Ppy < 325 && key22 == 2) {
+        noFill();
+        key22 = 0;
+      } else if ((key21 == 0 || key23 == 0) && lever1 == false) {
+        key22 = 1;
+        fill(255, 178, 102);
+      }
+      rect(675, 275, 50, 50);
+    }
+
+    if (key23 == 2) { //key 3
+      fill(255, 128, 0);
+      if (Ppx > 375 && Ppx < 525 && Ppy > 575 && Ppy < 725 && key23 == 0) {
+        noFill();
+        key22 = 0;
+      } else if ((key21 == 0 || key22 == 0) && lever1 == false) {
+        key22 = 1;
+        fill(255, 178, 102);
+      }
+      rect(475, 675, 50, 50);
+    }
+
+    if (lever1 == false) { //lever
+      fill(128, 128, 128);
+      if (Ppx < 125 && Ppy > 175 && Ppy < 325 && (key21 == 0 || key22 == 0 || key23 == 0)) {
+        fill(192, 192, 192);
+        key21 = 2;
+        key22 = 2;
+        key23 = 2;
+      }
+      rect(75, 275, 50, 50);
+    }
+
+    fill(0);
+    rect(0, 195, 200, 10); //h walls
+    rect(400, 195, 205, 10);
+    rect(0, 395, 200, 10);
+    rect(400, 595, 205, 10);
+
+    rect(395, 0, 10, 400); //v walls
+    rect(595, 200, 10, 200);
+    rect(195, 600, 10, 200);
+    rect(595, 600, 10, 200);
   }
 }
