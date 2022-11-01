@@ -1,4 +1,4 @@
-  int Ppx = 0;
+int Ppx = 0;
 int Ppy = 0;
 boolean Map1 = false;
 boolean Map2 = false;
