@@ -1,4 +1,4 @@
-int Ppx = 0;
+  int Ppx = 0;
 int Ppy = 0;
 boolean Map1 = false;
 boolean Map2 = false;
@@ -44,6 +44,8 @@ void devmode() {
     else if (HowToPlay == true) text("HowToPlay: true", 10, 910);
     if (About == false) text("About: false", 170, 910);
     else if (About == true) text("About: true", 170, 910);
+    if (HTPm2 == false) text("HTPm2: false", 10, 940);
+    else if (HTPm2 == true) text("HTPm2: true", 10, 940);
 
     if (Map1 == false) text("Map1: false", 300, 850);
     else if (Map1 == true) {
@@ -64,8 +66,8 @@ void devmode() {
     else if (Map2 == true) {
       text("Map2: true", 300, 880);
       text("Map2", 600, 850);
-      if (gOpen2 == false) text("gOpen2: false", 600, 880);
-      else if (gOpen2 == true) text("gOpen2: true", 600, 880);
+      //if (gOpen2 == false) text("gOpen2: false", 600, 880);
+      //else if (gOpen2 == true) text("gOpen2: true", 600, 880);
       if (lever1 == false) text("lever1: false", 600, 910);
       else if (lever1 == true) text("lever1: true", 600, 910);
       if (key21 == 2) text("key21: 2", 600, 940);
@@ -122,8 +124,10 @@ void player() {
   rect(Ppx, Ppy, 100, 100);
 }
 
-//////////////////////////////////////////////////////// 2D Puzzle ...
-//////////////////////////////////////////////////////// Homescreen
+///////////////////////////////////////////////////2D puzzle ...
+///////////////////////////////////////////////////homescreen
+
+boolean HTPm2 = false;
 
 void homescreen() {
   if (Homescreen == true) {
@@ -145,8 +149,7 @@ void homescreen() {
       textSize(75);
       text("Controls", 275, 250);
       textSize(45);
-      text("Press 'e' To Continue", 200, 550);
-      text("Press 'q' To Go Back", 210, 610);
+      text("Press 'e' To Continue", 200, 600);
       textSize(30);
       text("Press 'q'", 450, 380);
       text("To Go Back", 430, 410);
@@ -179,9 +182,14 @@ void homescreen() {
       fill(255, 153, 0);
       rect(600, 175, 50, 50);
       fill(0);
-      text("These are keys", 100, 200);
-      text("Collect all to unlock exit", 100, 250);
-      text("For more tips, reach more levels", 100, 400);
+      text("These are keys", 100, 250);
+      if (HTPm2 == false) text("For more tips, reach more levels", 100, 400);
+      else {
+        fill(128);
+        rect(600, 375, 50, 50);
+        fill(0);
+        text("These are levers. 1 key required", 100, 450);
+      }
     }
     if (About == true) {
       fill(153, 255, 255);
@@ -203,20 +211,50 @@ void homescreen() {
   }
 }
 
-//////////////////////////////////////////////////////// Homescreen
-//////////////////////////////////////////////////////// Input stuff
+///////////////////////////////////////////////////homescreen
+///////////////////////////////////////////////////input stuff
 
 void keyPressed() {
 
+  if (Map2 == true && Ppx <= 125 && Ppy >= 175 && Ppy <= 325 && (key21 == 0 || key22 == 0 || key23 == 0)) {
+    if (key == 'e') {
+      lever1 = true;
+      if (key21 == 0) {
+        key22 = 2;
+        key23 = 2;
+      } else if (key22 == 0) {
+        key21 = 2;
+        key23 = 2;
+      } else if (key23 == 0) {
+        key21 = 2;
+        key22 = 2;
+      }
+    }
+  }
+
   if (key == 'm') DevMode = true;
 
-  if (key == 'q' && HowToPlay == true) { //Goes back from How To Play
+  if (key == 'q') { //Goes back to main menu
+    Ppx = 0;
+    Ppy = 0;
+    Map1 = false;
+    Map2 = false;
+    noClip = false;
     Homescreen = true;
+    Controls = true;
     HowToPlay = false;
-  }
-  if (key == 'q' && About == true) { //Goes back from About
-    Homescreen = true;
     About = false;
+    Map1S = false;
+    Map2S = false;
+    key11 = false;
+    key12 = false;
+    key13 = false;
+    gOpen1 = false;
+    key21 = 2;
+    key22 = 2;
+    key23 = 2;
+    lever1 = false;
+    gOpen2 = false;
   }
 
   if (Controls == true && key == 'e') Controls = false;
@@ -232,10 +270,10 @@ void keyPressed() {
     if (key == 'p') {
       noClip = false;
     }
-    if (key == 'w') Ppy = Ppy - 5;
-    if (key == 'a') Ppx = Ppx - 5;
-    if (key == 's') Ppy = Ppy + 5;
-    if (key == 'd') Ppx = Ppx + 5;
+    if (key == 'w') Ppy = Ppy - 10;
+    if (key == 'a') Ppx = Ppx - 10;
+    if (key == 's') Ppy = Ppy + 10;
+    if (key == 'd') Ppx = Ppx + 10;
   } else if (noClip == false) {
     if (key == 'p') {
       noClip = true;
@@ -264,7 +302,8 @@ void keyPressed() {
           !(Ppy == 100 && Ppx > 595 && Ppx < 605) &&
           !(Ppy == 295 && Ppx < 200) &&
           !(Ppy == 295 && Ppx > 400) &&
-          !(Ppy == 495 && Ppx > 200 && Ppx < 400)) Ppy = Ppy + 5;
+          !(Ppy == 495 && Ppx > 200 && Ppx < 400) &&
+          !(gOpen1 == false && Ppx < 100 && Ppy == 495)) Ppy = Ppy + 5;
       }
       if (key == 'd') {
         if (!(Ppx == 700) &&
@@ -301,7 +340,8 @@ void keyPressed() {
           !(Ppx > 400 && Ppx < 605 && Ppy == 95) &&
           !(Ppx < 200 && Ppy == 295) &&
           !(Ppx > 95 && Ppx < 205 && Ppy == 500) &&
-          !(Ppx > 300 && Ppx < 605 && Ppy == 495)) Ppy = Ppy + 5;
+          !(Ppx > 300 && Ppx < 605 && Ppy == 495) &&
+          !(gOpen2 == false && Ppx > 605 && Ppy == 495)) Ppy = Ppy + 5;
       }
       if (key == 'd') {
         if (!(Ppx == 700) &&
@@ -335,8 +375,8 @@ void mouseClicked() {
   }
 }
 
-//////////////////////////////////////////////////////// Input stuff
-//////////////////////////////////////////////////////// Map1
+///////////////////////////////////////////////////input stuff
+///////////////////////////////////////////////////map1
 
 boolean key11 = false;
 boolean key12 = false;
@@ -391,9 +431,10 @@ void map1() {
     rect(595, 200, 10, 400);
     rect(200, 600, 10, 200);
 
-    if (gOpen1 == false) fill(255, 0, 0); //Barrier
-    if (key11 == true && key12 == true && key13 == true) gOpen1 = true;
-    if (gOpen1 == true) fill(255, 200, 200);
+    if (key11 == true && key12 == true && key13 == true) {
+      fill(255, 200, 200);
+      gOpen1 = true;
+    } else fill(255, 0, 0);
     rect(0, 595, 200, 10);
 
     fill(0, 0, 255); //Exit
@@ -402,12 +443,13 @@ void map1() {
     if (Map1 == true && Ppy > 505 && Ppy < 800 && Ppx < 5) {
       Map1 = false;
       Map2 = true;
+      HTPm2 = true;
     }
   }
 }
 
-////////////////////////////////////////////////////////////Map1
-////////////////////////////////////////////////////////////Map2
+///////////////////////////////////////////////////map1
+///////////////////////////////////////////////////map2
 
 // 2 = not picked up, 0 = picked up, 1 = pull lever
 int key21 = 2;
@@ -416,55 +458,87 @@ int key23 = 2;
 boolean lever1 = false;
 boolean gOpen2 = false;
 
-void map2() {
+void map2() {  
   if (Map2 == true) {
 
+    if (Ppx > 500 && Ppy >= 695) {
+    Ppx = 0;
+    Ppy = 0;
+    Map1 = false;
+    Map2 = false;
+    noClip = false;
+    Homescreen = true;
+    Controls = false;
+    HowToPlay = false;
+    About = false;
+    Map1S = false;
+    Map2S = false;
+    key11 = false;
+    key12 = false;
+    key13 = false;
+    gOpen1 = false;
+    key21 = 2;
+    key22 = 2;
+    key23 = 2;
+    lever1 = false;
+    gOpen2 = false;
+  }
+    
     if (key21 == 2) { //key 1
       fill(255, 128, 0);
-      if (Ppx > 175 && Ppx < 325 && Ppy < 125 && key21 == 2) {
-        noFill();
+      if (Ppx > 375 && Ppx < 525 && Ppy < 125) {
         key21 = 0;
-      } else if ((key22 == 0 || key23 == 0) && lever1 == false) {
-        key21 = 1;
-        fill(255, 178, 102);
+        if (lever1 == false) {
+          key22 = 1;
+          key23 = 1;
+        }
       }
-      rect(275, 75, 50, 50);
-    }
+    } else if (key21 == 1) fill(255, 204, 153);
+    if (key21 == 2 || key21 == 1) rect(475, 75, 50, 50);
 
     if (key22 == 2) { //key 2
       fill(255, 128, 0);
       if (Ppx > 575 && Ppx < 725 && Ppy > 175 && Ppy < 325 && key22 == 2) {
-        noFill();
         key22 = 0;
-      } else if ((key21 == 0 || key23 == 0) && lever1 == false) {
-        key22 = 1;
-        fill(255, 178, 102);
+        if (lever1 == false) {
+          key21 = 1;
+          key23 = 1;
+        }
       }
-      rect(675, 275, 50, 50);
-    }
+    } else if (key22 == 1) fill(255, 204, 153);
+    if (key22 == 2 || key22 == 1) rect(675, 275, 50, 50);
 
     if (key23 == 2) { //key 3
       fill(255, 128, 0);
-      if (Ppx > 375 && Ppx < 525 && Ppy > 575 && Ppy < 725 && key23 == 0) {
-        noFill();
-        key22 = 0;
-      } else if ((key21 == 0 || key22 == 0) && lever1 == false) {
-        key22 = 1;
-        fill(255, 178, 102);
+      if (Ppx > 175 && Ppx < 325 && Ppy > 575 && Ppy < 725 && key23 == 2) {
+        key23 = 0;
+        if (lever1 == false) {
+          key21 = 1;
+          key22 = 1;
+        }
       }
-      rect(475, 675, 50, 50);
-    }
+    } else if (key23 == 1) fill(255, 204, 153);
+    if (key23 == 2 || key23 == 1) rect(275, 675, 50, 50);
 
     if (lever1 == false) { //lever
       fill(128, 128, 128);
-      if (Ppx < 125 && Ppy > 175 && Ppy < 325 && (key21 == 0 || key22 == 0 || key23 == 0)) {
+      if (Ppx <= 125 && Ppy >= 175 && Ppy <= 325 && (key21 == 0 || key22 == 0 || key23 == 0)) {
+        fill(0);
+        textSize(20);
+        text("Press e", Ppx+100, Ppy);
         fill(192, 192, 192);
-        key21 = 2;
-        key22 = 2;
-        key23 = 2;
       }
       rect(75, 275, 50, 50);
     }
+
+    if (lever1 == true && key21 == 0 && key22 == 0 && key23 == 0) {
+      fill(255, 200, 200);
+      gOpen2 = true;
+    } else fill(255, 0, 0);
+    rect(605, 595, 205, 10);
+
+    fill(0, 0, 255);
+    rect(605, 795, 195, 5);
 
     fill(0);
     rect(0, 195, 200, 10); //h walls
